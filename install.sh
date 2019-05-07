@@ -2,7 +2,7 @@ clear
 echo "******* Torghost installer ********"
 echo ""
 echo "=====> Installing tor bundle "
-sudo apt-get install tor -y -qq
+sudo pacman -S  tor 
 echo "=====> Installing dependencies "
 sudo pip install stem
 echo "=====> Installing TorGhost "
