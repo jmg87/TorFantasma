@@ -115,7 +115,7 @@ def start_torghost():
 
 	iptables_rules = """
 	NON_TOR="192.168.1.0/24 192.168.0.0/24"
-	TOR_UID=%s
+	TOR_UID=$(id -ur tor)
 	TRANS_PORT="9040"
 
 	iptables -F
@@ -134,7 +134,7 @@ def start_torghost():
 	done
 	iptables -A OUTPUT -m owner --uid-owner $TOR_UID -j ACCEPT
 	iptables -A OUTPUT -j REJECT
-	"""%(getoutput("id -ur tor"))
+	"""#%s(getoutput("id -ur tor"))
 
 	os.system(iptables_rules)
 	print(bcolors.GREEN+"[done]"+bcolors.ENDC)
@@ -157,7 +157,7 @@ def stop_torghost():
 
 	print(bcolors.GREEN+"[done]"+bcolors.ENDC)
 	print(t()+" Restarting Network manager", end=' ')
-	os.system("service network-manager restart")
+	os.system("systemctl restart NetworkManager.service")
 	print(bcolors.GREEN+"[done]"+bcolors.ENDC)
 	print(t()+" Fetching current IP...")
 	print(t()+" CURRENT IP : "+bcolors.GREEN+ip()+bcolors.ENDC)
